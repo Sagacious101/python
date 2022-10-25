@@ -2,7 +2,7 @@ import turtle as t
 import math
 
 t.shape("turtle")
-t.speed(0)
+t.speed(5)
 
 
 
@@ -45,11 +45,11 @@ def draw_walls(walls_x, walls_y, walls_height, walls_width, walls_color):
     t.end_fill()
 
 
-def draw_roof(roof_height,walls_width,roof_color,walls_height,roof_side, roof_angle):
+def draw_roof(roof_height,walls_width,roof_color,walls_height,roof_side, roof_angle,walls_x,roof_y):
     print("Нарисовали крышу")
-    t.fillcolor(roof_color)
-    t.left(90)
-    t.forward(walls_height)
+    t.penup()
+    t.goto(walls_x, roof_y)
+    t.pendown()
     t.fillcolor(roof_color)
     t.begin_fill()
     t.setheading(roof_angle)
@@ -61,9 +61,8 @@ def draw_roof(roof_height,walls_width,roof_color,walls_height,roof_side, roof_an
     t.end_fill()
 
 
-def draw_doors(door_x,door_width,door_height,door_color,walls_x,walls_y,walls_width,walls_height):
+def draw_doors(door_x,door_width,door_height,door_color,walls_y,walls_width,walls_height):
     print("Нарисовали двери")
-    door_x = (walls_x + (walls_width/2 - door_width/2))
     t.penup()
     t.goto(door_x,walls_y)
     t.pendown()
@@ -93,14 +92,15 @@ door_color,
 roof_height,
 roof_color
 ):
+    roof_y = walls_y + walls_height
     door_x = (walls_x + (walls_width/2 - door_width/2))
     roof_side = math.sqrt(roof_height ** 2 + (walls_width / 2) ** 2)
     roof_angle = math.degrees(math.atan(roof_height / (walls_width/2)))
     draw_walls(walls_x, walls_y, walls_height, walls_width, walls_color)
-    draw_roof(roof_height, walls_width, roof_color, walls_height, roof_side, roof_angle)
-    draw_doors(door_x, door_width, door_height, door_color, walls_x, walls_y, walls_width, walls_height)
+    draw_roof(roof_height,walls_width,roof_color,walls_height,roof_side, roof_angle,walls_x,roof_y)
+    draw_doors(door_x, door_width, door_height, door_color, walls_y, walls_width, walls_height)
 
-draw_house(0, 0, 200, 100,"purple", 50, 70, "blue", 50, "purple")
 
+draw_house(0, 0, 200, 100,"purple", 60, 80, "blue", 90, "red")
+draw_house(200,200,100,100,"blue",40,60,"red",40,"purple")
 t.done()
-
